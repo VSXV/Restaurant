@@ -21,16 +21,21 @@ class CellManager {
         indexPath: IndexPath
     ) {
         cell.textLabel?.text = menuItem.name
-        cell.detailTextLabel?.text = String(format: "$%.2f", menuItem.price)
+        cell.detailTextLabel?.text = menuItem.price.formattedHundreds
         
-        guard cell.imageView?.image == nil else { return }
-        networkManager.getImage(menuItem.imageURL) { image, error in
-            if let error = error {
-                print("ERROR: ", error.localizedDescription)
-            }
-            DispatchQueue.main.async {
-                cell.imageView?.image = image
-                tableView.reloadRows(at: [indexPath], with: .automatic)
+        if let image = menuItem.image {
+            cell.imageView?.image = image
+        } else {
+            networkManager.getImage(menuItem.imageURL) { image, error in
+                if let error = error {
+                    print("ERROR: ", error.localizedDescription)
+                }
+                if let image = image {
+                menuItem.image = image
+                DispatchQueue.main.async {
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                }
             }
         }
     }

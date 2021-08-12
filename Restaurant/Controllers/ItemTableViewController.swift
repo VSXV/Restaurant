@@ -1,5 +1,5 @@
 //
-//  ItemTableViewController.swift
+//  MenuTableViewController.swift
 //  Restaurant
 //
 //  Created by Сергей Воробьев on 11.08.2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ItemTableViewController: UITableViewController {
+class MenuTableViewController: UITableViewController {
 
     // MARK: - Properties
     let cellManager = CellManager()
